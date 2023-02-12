@@ -1,7 +1,9 @@
-import keyboard
+from objects import *
 
-while True:
-    while keyboard.is_pressed('q'):
-        print("A")
-    if keyboard.is_pressed('a'):
-        break
+# import keyboard
+#
+# while True:
+#     while keyboard.is_pressed('q'):
+#         print("A")
+#     if keyboard.is_pressed('a'):
+#         break
