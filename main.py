@@ -203,7 +203,7 @@ def main():
 def game(screen,clock,waves,s,crab,font):
     timePoints = 0
     fruitPoints = 0
-    player = Player(800-43,700,1);
+    player = Player(800-43,700,0.5);
     wavesCounter = 0;
     fadAlpha=255
     for i in range(0,20):
@@ -226,7 +226,7 @@ def game(screen,clock,waves,s,crab,font):
     hazards = []
     fruits = []
     hazardCounter = 0
-    hazardAdder = 1
+    hazardAdder = 0.5
     fruitCounter = 0
     pointCounter = 0
     center = (0,0)
@@ -246,8 +246,8 @@ def game(screen,clock,waves,s,crab,font):
         hazardCounter+=hazardAdder
         if(hazardCounter>=25):
             hazards.append(Hazard())
-            hazardCounter%=15
-            hazardAdder+=.05
+            hazardCounter=0
+            hazardAdder+=0.07
 
         fruitCounter+=1
         if(fruitCounter>=210):
