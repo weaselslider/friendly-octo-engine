@@ -20,6 +20,9 @@ class Sprite:
         self.yPos = 0
         self.startSide = 'l' if (self.xPos < INITIAL_SCREEN_WIDTH) else 'r'
 
+    def __del__(self):
+        return
+
     # update sprite position
     def updatePos(self, vel):
         self.yPos -= vel
@@ -28,6 +31,9 @@ class Sprite:
                 self.xPos += self.drift
             else:
                 self.xPos -= self.drift
+
+        if not (0 <= self.xPos <= INITIAL_SCREEN_WIDTH and 0 <= self.yPos <= INITIAL_SCREEN_HEIGHT):
+            del self
 
     def collision(self):
         return 0
