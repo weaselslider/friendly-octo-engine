@@ -1,6 +1,5 @@
 from player import Player
-#from hazard import Hazard
-#from fruit  import Fruit
+from sprites import *
 
 
 import pygame
@@ -85,6 +84,7 @@ def main():
         #Dude and Bro
         #start: enter
         #quit: esc
+        pygame.event.get():
         while(True):
             clock.tick(30)
             bre=False
@@ -157,7 +157,8 @@ def main():
         #game()
 
 def game(screen,clock,waves,s,crab):
-    points = 0
+    timePoints = 0
+    fruitPoints = 0
     player = Player(800-43,700,1);
     wavesCounter = 0;
     fadAlpha=255
@@ -183,13 +184,15 @@ def game(screen,clock,waves,s,crab):
     hazardCounter = 0
     hazardAdder = 1
     fruitCounter = 0
+    pointCounter = 0
     while True:
         pygame.event.pump()
         delta_t = clock.tick(30)/1000
         screen.fill((255, 255, 255))
         screen.blit(waves[0],(0,0))
-        screen.blit(crab, player.get_pos())
-        pygame.display.flip()
+        crabRect = screen.blit(crab, player.get_pos())
+
+
         wavesCounter+=1
         if(wavesCounter>=10):
             waves = [waves[1],waves[0]]
@@ -197,11 +200,62 @@ def game(screen,clock,waves,s,crab):
 
         hazardCounter+=hazardAdder
         if(hazardCounter>=15):
-            hazards.push(Hazard())
-            hazards%=15
+            hazards.append(Hazard())
+            hazardCounter%=15
             hazardAdder+=.05
+
+        fruitCounter+=1
+        if(fruitCounter>=210):
+            fruits.append(Fruit())
+            fruitCounter = 0
+
+        pointCounter+=1
+        if(pointCounter>=30):
+            timePoints+=1
+            pointCounter%=30
 
         keys = pygame.key.get_pressed()
         y_vel = player.player_move(delta_t, keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
+
+        #draw, update fruits & hazards
+        #also, collision checks
+        mid = crabRect.center
+        collisionRect = crabRect.copy()
+        collisionRect.width/=2
+        collisionRect.height/=2
+        collisionRect.center = mid
+
+        for i in range(len(fruits)-1,-1,-1):
+            #do stuff
+            pos = (fruits[i].xPos,fruits[i].yPos)
+            img = fruits[i].getImage()
+            fruit_rect = screen.blit(img, pos)
+            fruits[i].updatePos(y_vel,delta_t)
+            if collisionRect.colliderect(fruit_rect):
+                fruitPoints+=fruits[i].collision()
+                fruits.pop(i)
+
+        brek = False
+        for i in range(len(hazards)-1,-1,-1):
+            #do stuff
+            pos = (hazards[i].xPos,hazards[i].yPos)
+            img = hazards[i].getImage()
+            hazard_rect = screen.blit(img, pos)
+            hazards[i].updatePos(y_vel,delta_t)
+            if collisionRect.colliderect(hazard_rect):
+                brek=True
+                hazards.pop(i)
+                break
+            #do stuff
+
+
+
+        #display points here?
+
+        pygame.display.flip()
+        if(brek):break
+    #outtro here.
+    print(timePoints)
+    print(fruitPoints)
 
 main()

@@ -57,13 +57,14 @@ class Hazard(Sprite):
         super().__init__()
         self.imageIndex = randint(0, len(HAZARD_FILE_PATHS) - 1)
         _, _, self.name = HAZARD_FILE_PATHS[self.imageIndex].split("/")
+        self.getName()
 
     def getImage(self):
         return HAZARD_IMAGES[self.imageIndex]
 
     def getName(self):
-        name, _ = self.name.split(".")
-        return name
+        self.name, _ = self.name.split(".")
+        return self.name
 
     def collision(self):
         return -1   # death / end of game
@@ -75,19 +76,21 @@ class Fruit(Sprite):
         super().__init__()
         self.imageIndex = randint(0, len(FRUIT_FILE_PATHS) - 1)
         _, _, self.name = FRUIT_FILE_PATHS[self.imageIndex].split("/")
+        self.getName()
 
     def getImage(self):
-        return FRUIT_IMAGES[self.imageIndex].split(".")
+        return FRUIT_IMAGES[self.imageIndex]
 
     def getName(self):
-        name, _ = self.name.split(".")
-        return name
+        self.name, _ = self.name.split(".")
+        return self.name
 
     # depending on the fruit that the player collides with, a different number of points are added to the score
     def collision(self):
+        print(self.name)
         if self.name == "pineapple":
-            return 5
+            return 7
         elif self.name == "bananas":
-            return 3
+            return 5
         elif self.name == "coconut1" or self.name == "coconut2":
-            return 1
+            return 3
