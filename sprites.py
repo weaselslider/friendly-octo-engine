@@ -10,7 +10,7 @@ FRUIT_LIST = [("img/fruit/" + filename) for filename in os.listdir('img/fruit')]
 
 # abstract object/sprite class
 # stores name, image file path, position of sprite, and drift attributes
-class Object:
+class Sprite:
     image = None
     drift = randint(0, 40)
     name = None
@@ -42,7 +42,7 @@ class Object:
 
 
 # hazard class -> when instantiated, object is assigned jpg of random hazard
-class Hazard(Object):
+class Hazard(Sprite):
     def __init__(self):
         super().__init__()
         self.image = HAZARD_LIST[randint(0, len(HAZARD_LIST)-1)]
@@ -53,7 +53,7 @@ class Hazard(Object):
 
 
 # fruit class -> when instantiated, object is assigned jpg of random fruit
-class Fruit(Object):
+class Fruit(Sprite):
     def __init__(self):
         super().__init__()
         self.image = FRUIT_LIST[randint(0, len(FRUIT_LIST) - 1)]
