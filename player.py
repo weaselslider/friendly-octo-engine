@@ -11,18 +11,18 @@ class Player:
         self.y_vel += self.y_accel*delta_t*30
         self.x_vel+=self.x_accel*delta_t*30
         if(not (left^right)):
-            self.x_vel*=.99
+            self.x_vel*=.95
 
-        if self.x <= 30 and left:
+        if self.x <= 30 and not right:
             self.x = 30
-            self.x_vel = 0
-        elif left:
+            self.x_vel *= -.5
+        if left:
             self.x_vel -= 1
 
-        if self.x >= 1480 and right:
+        if self.x >= 1480 and not left:
             self.x = 1480
-            self.x_vel = 0
-        elif right:
+            self.x_vel *= -.5
+        if right:
             self.x_vel += 1
 
         self.x+=self.x_vel
