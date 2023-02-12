@@ -150,6 +150,8 @@ def main():
         pygame.display.flip()
         game(screen,clock,waves,s,crabOnDolphin)
 
+        #leaderboard
+
 
         #loading screen
         #wait for enter? esc to quit
@@ -185,6 +187,7 @@ def game(screen,clock,waves,s,crab):
     hazardAdder = 1
     fruitCounter = 0
     pointCounter = 0
+    center = (0,0)
     while True:
         pygame.event.pump()
         delta_t = clock.tick(30)/1000
@@ -244,7 +247,6 @@ def game(screen,clock,waves,s,crab):
             hazards[i].updatePos(y_vel,delta_t)
             if collisionRect.colliderect(hazard_rect):
                 brek=True
-                hazards.pop(i)
                 break
             #do stuff
 
@@ -253,9 +255,53 @@ def game(screen,clock,waves,s,crab):
         #display points here?
 
         pygame.display.flip()
-        if(brek):break
+        if(brek):
+            center = mid
+            break
     #outtro here.
+
+
     print(timePoints)
     print(fruitPoints)
+    degree = 0;
+    for i in range(0,16):
+        clock.tick(30)
+        screen.fill((255, 255, 255))
+        for i in fruits:
+            screen.blit(i.getImage(),(i.xPos,i.yPos))
+        for i in hazards:
+            screen.blit(i.getImage(),(i.xPos,i.yPos))
+        rat = pygame.transform.rotate(crab,degree)
+        #do the rat
+        screen.blit(rat,center)
+        degree+=10
+
+        pygame.display.flip()
+    opacity = 0
+    for i in range(0,15):
+        clock.tick(30)
+        screen.fill((255, 255, 255))
+        for i in fruits:
+            screen.blit(i.getImage(),(i.xPos,i.yPos))
+        for i in hazards:
+            screen.blit(i.getImage(),(i.xPos,i.yPos))
+        rat = pygame.transform.rotate(crab,degree)
+        #do the rat
+        screen.blit(rat,center)
+        degree+=10
+        s.set_alpha(opacity)
+        screen.blit(s,(0,0)))
+        pygame.display.flip()
+
+    clock.tick(30)
+    s.set_alpha(255)
+    screen.blit(s,(0,0))
+    pygame.display.flip()
+    clock.tick(30)
+
+
+
+
+    return (timePoints, fruitPoints)
 
 main()
