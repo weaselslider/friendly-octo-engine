@@ -1,17 +1,21 @@
 import os
 from random import randint
+import pygame
 
 INITIAL_SCREEN_WIDTH = 1600
 INITIAL_SCREEN_HEIGHT = 900
 
-HAZARD_LIST = [("img/hazard/" + filename) for filename in os.listdir('img/hazard')]
-FRUIT_LIST = [("img/fruit/" + filename) for filename in os.listdir('img/fruit')]
+HAZARD_FILE_PATHS = [("img/hazard/" + filename) for filename in os.listdir('img/hazard')]
+FRUIT_FILE_PATHS = [("img/fruit/" + filename) for filename in os.listdir('img/fruit')]
+
+HAZARD_IMAGES = [pygame.transform.scale(pygame.image.load("img/hazard/" + filename), (75, 75)) for filename in os.listdir('img/hazard')]
+FRUIT_IMAGES = [pygame.transform.scale(pygame.image.load("img/fruit/" + filename), (75, 75)) for filename in os.listdir('img/fruit')]
 
 
 # abstract object/sprite class
 # stores name, image file path, position of sprite, and drift attributes
 class Sprite:
-    image = None
+    imageIndex = None
     drift = randint(0, 40)
     name = None
 
@@ -25,7 +29,7 @@ class Sprite:
 
     # update sprite position
     def updatePos(self, vel, dt=1):
-        self.yPos -= vel*dt
+        self.yPos += vel*dt
         if self.drift != 0:
             if self.startSide == 'l':
                 self.xPos += self.drift*dt
@@ -40,7 +44,7 @@ class Sprite:
 
     # getter function for image
     def getImage(self):
-        return self.image
+        return
 
     # getter function for name
     def getName(self):
@@ -51,8 +55,15 @@ class Sprite:
 class Hazard(Sprite):
     def __init__(self):
         super().__init__()
-        self.image = HAZARD_LIST[randint(0, len(HAZARD_LIST)-1)]
-        _, _, self.name = self.image.split("/")
+        self.imageIndex = randint(0, len(HAZARD_FILE_PATHS) - 1)
+        _, _, self.name = HAZARD_FILE_PATHS[self.imageIndex].split("/")
+
+    def getImage(self):
+        return HAZARD_IMAGES[self.imageIndex]
+
+    def getName(self):
+        name, _ = self.name.split(".")
+        return name
 
     def collision(self):
         return -1   # death / end of game
@@ -62,8 +73,15 @@ class Hazard(Sprite):
 class Fruit(Sprite):
     def __init__(self):
         super().__init__()
-        self.image = FRUIT_LIST[randint(0, len(FRUIT_LIST) - 1)]
-        _, _, self.name = self.image.split("/")
+        self.imageIndex = randint(0, len(FRUIT_FILE_PATHS) - 1)
+        _, _, self.name = FRUIT_FILE_PATHS[self.imageIndex].split("/")
+
+    def getImage(self):
+        return FRUIT_IMAGES[self.imageIndex].split(".")
+
+    def getName(self):
+        name, _ = self.name.split(".")
+        return name
 
     # depending on the fruit that the player collides with, a different number of points are added to the score
     def collision(self):
