@@ -15,15 +15,19 @@ class Player:
 
         if self.x <= 30:
             self.x = 30
-            self.x_vel *= -.5
-        if left:
-            self.x_vel -= 1
-
-        if self.x >= 1480:
+            self.x_vel *= -.6
+            if right:
+                self.x_vel += 1
+        elif self.x >= 1480:
             self.x = 1480
-            self.x_vel *= -.5
-        if right:
-            self.x_vel += 1
+            self.x_vel *= -.6
+            if left:
+                self.x_vel -= 1
+        else:
+            if right:
+                self.x_vel += 1
+            elif left:
+                self.x_vel -= 1
 
         self.x+=self.x_vel
 
