@@ -31,7 +31,7 @@ def main():
     dude = pygame.transform.scale(dude,(536,224))
 
     CrabFont =     pygame.font.SysFont("Comic Sans MS", 150)
-    MiniCrabFont = pygame.font.SysFont("Comic Sans MS", 15)
+    MiniCrabFont = pygame.font.SysFont("Comic Sans MS", 50)
 
     TitleLabel = CrabFont.render("Dood & Bro", 1, (50,50,50))
     SubLabel = MiniCrabFont.render("start: enter & exit: esc", 1, (50,50,50))
@@ -103,7 +103,7 @@ def main():
             screen.blit(dude,(crabPos,500))
             #blit the text!
             screen.blit(TitleLabel,(600,150))
-            screen.blit(SubLabel,(350,600))
+            screen.blit(SubLabel,(180,700))
             backgroundCounter+=1
             if(backgroundCounter%10==0):
                 bg = [bg[1],bg[0]]
