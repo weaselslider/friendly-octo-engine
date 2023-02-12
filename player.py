@@ -13,13 +13,13 @@ class Player:
         if(not (left^right)):
             self.x_vel*=.95
 
-        if self.x <= 30 and not right:
+        if self.x <= 30:
             self.x = 30
             self.x_vel *= -.5
         if left:
             self.x_vel -= 1
 
-        if self.x >= 1480 and not left:
+        if self.x >= 1480:
             self.x = 1480
             self.x_vel *= -.5
         if right:

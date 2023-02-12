@@ -1,9 +1,10 @@
 from player import Player
 from sprites import *
 
-
 import pygame
 import json
+from pygame import mixer
+mixer.init()
 
 
 def main():
