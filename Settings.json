@@ -1,0 +1,14 @@
+{
+  "y_acceleration":12345,
+  "x_acceleration":12345,
+  "x_attentuation":.93,
+  "hazards":[
+    "garbage_bags.png"
+  ],
+  "fruits":[
+    "coconut.png",
+    "ananas.png",
+    "bananas.png"
+  ]
+
+}
