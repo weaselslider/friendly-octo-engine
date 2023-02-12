@@ -8,8 +8,8 @@ INITIAL_SCREEN_HEIGHT = 900
 HAZARD_FILE_PATHS = [("img/hazard/" + filename) for filename in os.listdir('img/hazard')]
 FRUIT_FILE_PATHS = [("img/fruit/" + filename) for filename in os.listdir('img/fruit')]
 
-HAZARD_IMAGES = [pygame.image.load("img/hazard/" + filename) for filename in os.listdir('img/hazard')]
-FRUIT_IMAGES = [pygame.image.load("img/fruit/" + filename) for filename in os.listdir('img/fruit')]
+HAZARD_IMAGES = [pygame.transform.scale(pygame.image.load("img/hazard/" + filename), (75, 75)) for filename in os.listdir('img/hazard')]
+FRUIT_IMAGES = [pygame.transform.scale(pygame.image.load("img/fruit/" + filename), (75, 75)) for filename in os.listdir('img/fruit')]
 
 
 # abstract object/sprite class
@@ -29,7 +29,7 @@ class Sprite:
 
     # update sprite position
     def updatePos(self, vel, dt=1):
-        self.yPos -= vel*dt
+        self.yPos += vel*dt
         if self.drift != 0:
             if self.startSide == 'l':
                 self.xPos += self.drift*dt
