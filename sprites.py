@@ -22,7 +22,7 @@ class Sprite:
     def __init__(self):
         self.xPos = randint(0, INITIAL_SCREEN_WIDTH)
         self.yPos = 0
-        self.startSide = 'l' if (self.xPos < INITIAL_SCREEN_WIDTH) else 'r'
+        self.startSide = 'l' if (self.xPos < INITIAL_SCREEN_WIDTH/2) else 'r'
 
     def __del__(self):
         return
