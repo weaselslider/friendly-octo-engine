@@ -42,26 +42,27 @@ def main():
 
     bgAlpha = 0
 
+    bgAlpha=0
+    for i in range(0,20):
+
+        pygame.event.pump()
+        clock.tick(30)
+        screen.fill((0, 0, 0))
+        bg[0].set_alpha(bgAlpha)
+        screen.blit(bg[0],(0,0))
+        pygame.display.flip()
+        backgroundCounter+=1
+        bgAlpha+=12.75
+        if(backgroundCounter%10==0):
+            bg = [bg[1],bg[0]]
+            backgroundCounter=0
+    bg[0].set_alpha(255)
+    bg[1].set_alpha(255)
+    screen.blit(bg[0],(800,450))
     while True:
         #background, crab, title
         #210 frames per fruit
-        bgAlpha=0
-        for i in range(0,20):
 
-            pygame.event.pump()
-            clock.tick(30)
-            screen.fill((0, 0, 0))
-            bg[0].set_alpha(bgAlpha)
-            screen.blit(bg[0],(0,0))
-            pygame.display.flip()
-            backgroundCounter+=1
-            bgAlpha+=12.75
-            if(backgroundCounter%10==0):
-                bg = [bg[1],bg[0]]
-                backgroundCounter=0
-        bg[0].set_alpha(255)
-        bg[1].set_alpha(255)
-        screen.blit(bg[0],(800,450))
 
         #now, the CRAB!
         crabPos= -600
@@ -84,7 +85,8 @@ def main():
         #Dude and Bro
         #start: enter
         #quit: esc
-        pygame.event.get():
+        pygame.event.get()
+
         while(True):
             clock.tick(30)
             bre=False
@@ -148,9 +150,48 @@ def main():
 
         screen.fill((0,0,0));
         pygame.display.flip()
-        game(screen,clock,waves,s,crabOnDolphin)
+        time,fruit = game(screen,clock,waves,s,crabOnDolphin,MiniCrabFont)
 
-        #leaderboard
+        #scoarboard
+        a = CrabFont.render("Time : "+str(time),1, (50,50,50))
+        b = CrabFont.render("Fruit: "+str(fruit),1, (50,50,50))
+        c = CrabFont.render("SCORE: "+str(time+fruit),1, (50,50,50))
+
+        #fade into start
+        opacity = 255
+        for i in range(0,20):
+            pygame.event.pump()
+            clock.tick(30)
+            opacity-=12.75
+            screen.fill((0,0,0))
+            screen.blit(bg[0],(0,0))
+            backgroundCounter+=1
+            if(backgroundCounter%10==0):
+                bg = [bg[1],bg[0]]
+                backgroundCounter=0
+            screen.blit(a, (400,150))
+            screen.blit(b, (400,350))
+            screen.blit(c, (400,550))
+            s.set_alpha(opacity)
+            screen.blit(s,(0,0))
+            pygame.display.flip()
+
+        while(True):
+            pygame.event.pump()
+            clock.tick(30)
+            bre = False
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        quit()
+                    if event.key == pygame.K_RETURN:
+                        bre = True
+                        break
+
+            if(bre):break
+
+
+
 
 
         #loading screen
@@ -158,7 +199,7 @@ def main():
         #wipe loading screen & load game
         #game()
 
-def game(screen,clock,waves,s,crab):
+def game(screen,clock,waves,s,crab,font):
     timePoints = 0
     fruitPoints = 0
     player = Player(800-43,700,1);
@@ -202,7 +243,7 @@ def game(screen,clock,waves,s,crab):
             wavesCounter%=10
 
         hazardCounter+=hazardAdder
-        if(hazardCounter>=15):
+        if(hazardCounter>=25):
             hazards.append(Hazard())
             hazardCounter%=15
             hazardAdder+=.05
@@ -253,6 +294,8 @@ def game(screen,clock,waves,s,crab):
 
 
         #display points here?
+        ScoreLabel = font.render(str(timePoints+fruitPoints), 1, (50,50,50))
+        screen.blit(ScoreLabel,(800,100))
 
         pygame.display.flip()
         if(brek):
@@ -264,9 +307,15 @@ def game(screen,clock,waves,s,crab):
     print(timePoints)
     print(fruitPoints)
     degree = 0;
+    center = (center[0],center[1]-150)
     for i in range(0,16):
         clock.tick(30)
         screen.fill((255, 255, 255))
+        screen.blit(waves[0],(0,0))
+        wavesCounter+=1
+        if(wavesCounter>=10):
+            waves = [waves[1],waves[0]]
+            wavesCounter%=10
         for i in fruits:
             screen.blit(i.getImage(),(i.xPos,i.yPos))
         for i in hazards:
@@ -274,13 +323,19 @@ def game(screen,clock,waves,s,crab):
         rat = pygame.transform.rotate(crab,degree)
         #do the rat
         screen.blit(rat,center)
-        degree+=10
+        degree+=20
+
 
         pygame.display.flip()
     opacity = 0
     for i in range(0,15):
         clock.tick(30)
         screen.fill((255, 255, 255))
+        screen.blit(waves[0],(0,0))
+        wavesCounter+=1
+        if(wavesCounter>=10):
+            waves = [waves[1],waves[0]]
+            wavesCounter%=10
         for i in fruits:
             screen.blit(i.getImage(),(i.xPos,i.yPos))
         for i in hazards:
@@ -288,9 +343,10 @@ def game(screen,clock,waves,s,crab):
         rat = pygame.transform.rotate(crab,degree)
         #do the rat
         screen.blit(rat,center)
-        degree+=10
+        degree+=20
         s.set_alpha(opacity)
-        screen.blit(s,(0,0)))
+        screen.blit(s,(0,0))
+        opacity+=16
         pygame.display.flip()
 
     clock.tick(30)
