@@ -1,10 +1,22 @@
 class Player:
-    def __init__(self,x,y,y_accel):
-        self.x = x/2
-        self.y = y-30
+    def __init__(self, x, y, y_accel):
+        self.x = x
+        self.y = y
         self.x_vel = 0
+        self.x_accel = 0
         self.y_vel = 90
         self.y_accel = y_accel
 
-    def player_move(self, delta_t):
-        self.y_vel += y_
+    def player_move(self, delta_t, left, right):
+        self.y_vel += self.y_accel*delta_t*30
+        self.x_vel+=self.x_accel*delta_t*30
+        if(not (left^right)):
+            self.x_vel*=.99
+        if(left):self.x_vel-=1
+        if(right):self.x_vel+=1
+
+        self.x+=self.x_vel
+
+        return self.y_vel
+    def get_pos(self):
+        return (self.x, self.y)
