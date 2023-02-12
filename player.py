@@ -12,8 +12,18 @@ class Player:
         self.x_vel+=self.x_accel*delta_t*30
         if(not (left^right)):
             self.x_vel*=.99
-        if(left):self.x_vel-=1
-        if(right):self.x_vel+=1
+
+        if self.x <= 30 and left:
+            self.x = 30
+            self.x_vel = 0
+        elif left:
+            self.x_vel -= 1
+
+        if self.x >= 1480 and right:
+            self.x = 1480
+            self.x_vel = 0
+        elif right:
+            self.x_vel += 1
 
         self.x+=self.x_vel
 

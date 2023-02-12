@@ -260,11 +260,14 @@ def game(screen,clock,waves,s,crab,font):
 
         keys = pygame.key.get_pressed()
         y_vel = player.player_move(delta_t, keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
+        # print(player.x)
+
 
         #draw, update fruits & hazards
         #also, collision checks
         mid = crabRect.center
         collisionRect = crabRect.copy()
+        # print(collisionRect.width, collisionRect.height)
         collisionRect.width/=2
         collisionRect.height/=2
         collisionRect.center = mid
