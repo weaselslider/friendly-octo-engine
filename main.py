@@ -21,6 +21,9 @@ def main():
     bg=[bg1,bg2]
     screen = pygame.display.set_mode((1600,900))
 
+    dude = pygame.image.load("./img/other/front_facing_crab.png")
+    dude = pygame.transform.scale(dude,(536,224))
+
     backgroundCounter = 0;
 
     bgAlpha = 0
@@ -49,7 +52,66 @@ def main():
         screen.blit(bg[0],(800,450))
 
         #now, the CRAB!
+        crabPos= -600
+        crabVel= 75
+        crabAccel = -2
+        for i in range(0,35):
+            pygame.event.pump()
+            clock.tick(30)
+            screen.fill((0, 0, 0))
+            screen.blit(bg[0],(0,0))
+            screen.blit(dude,(crabPos,500))
+            crabPos+=crabVel
+            crabVel+=crabAccel
+            pygame.display.flip()
+            backgroundCounter+=1
+            if(backgroundCounter%10==0):
+                bg = [bg[1],bg[0]]
+                backgroundCounter=0
 
+        #Dude and Bro
+        #start: enter
+        #quit: esc
+        while(True):
+            clock.tick(30)
+            bre=False
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        quit()
+                    if event.key == pygame.K_RETURN:
+                        bre = True
+                        break
+
+            if(bre):break
+            screen.blit(bg[0],(0,0))
+            screen.blit(dude,(crabPos,500))
+            print("somethin")
+            backgroundCounter+=1
+            if(backgroundCounter%10==0):
+                bg = [bg[1],bg[0]]
+                backgroundCounter=0
+            pygame.display.flip()
+
+
+
+
+        #crab out
+
+
+        for i in range(0,45):
+            pygame.event.pump()
+            clock.tick(30)
+            screen.fill((0, 0, 0))
+            screen.blit(bg[0],(0,0))
+            screen.blit(dude,(crabPos,500))
+            crabPos+=crabVel
+            crabVel+=crabAccel
+            pygame.display.flip()
+            backgroundCounter+=1
+            if(backgroundCounter%10==0):
+                bg = [bg[1],bg[0]]
+                backgroundCounter=0
 
 
         #loading screen
