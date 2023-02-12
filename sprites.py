@@ -71,5 +71,5 @@ class Fruit(Sprite):
             return 5
         elif self.name == "bananas":
             return 3
-        elif self.name == "coconut":
+        elif self.name == "coconut1" or self.name == "coconut2":
             return 1

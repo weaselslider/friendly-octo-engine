@@ -1,9 +1,2 @@
-from objects import *
+from sprites import *
 
-# import keyboard
-#
-# while True:
-#     while keyboard.is_pressed('q'):
-#         print("A")
-#     if keyboard.is_pressed('a'):
-#         break
