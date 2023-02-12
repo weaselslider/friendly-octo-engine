@@ -24,13 +24,13 @@ class Sprite:
         return
 
     # update sprite position
-    def updatePos(self, vel):
-        self.yPos -= vel
+    def updatePos(self, vel, dt=1):
+        self.yPos -= vel*dt
         if self.drift != 0:
             if self.startSide == 'l':
-                self.xPos += self.drift
+                self.xPos += self.drift*dt
             else:
-                self.xPos -= self.drift
+                self.xPos -= self.drift*dt
 
         if not (0 <= self.xPos <= INITIAL_SCREEN_WIDTH and 0 <= self.yPos <= INITIAL_SCREEN_HEIGHT):
             del self
